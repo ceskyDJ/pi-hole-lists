@@ -1,0 +1,7 @@
+services:
+  pi-hole-lists:
+    container_name: pi-hole-lists
+    image: ghcr.io/ceskydj/pi-hole-lists:latest
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
