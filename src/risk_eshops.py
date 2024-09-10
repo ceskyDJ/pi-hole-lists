@@ -21,19 +21,24 @@ def is_domain_name(link: str) -> str:
     return search_domain_name_match is not None
 
 
-def create_block_list() -> None:
-    """Creates a block list from publicly available webpage of risk e-shops"""
+def create_blocklist_risk_eshops() -> str:
+    """
+    Creates a blocklist from publicly available webpage of risk e-shops
+
+    :return: Blocklist with risk e-shops
+    """
     response = requests.get('https://www.coi.cz/pro-spotrebitele/rizikove-e-shopy/')
     parsed_html = etree.HTML(response.content)
 
-    # Create block list (set of blocked domain names respectively)
+    # Create blocklist (set of blocked domain names respectively)
     link_elements = parsed_html.xpath('//article[@class="information-row"]//p[@class="list_titles"]/span')
     domain_names = {link_element.text for link_element in link_elements if is_domain_name(link_element.text)}
 
     now = datetime.now(tz=timezone.utc)
 
-    with open(f'out/risk-eshops.txt', 'w') as f:
-        f.write(textwrap.dedent(f'''\
+    generated_rules = [f'0.0.0.0 {domain_name}' for domain_name in domain_names]
+
+    output = textwrap.dedent(f'''\
         # Title: Risk e-shops
         #
         # This is a block list for Pi-Hole created from a public list
@@ -52,9 +57,11 @@ def create_block_list() -> None:
         # Source of domain names: https://www.coi.cz/pro-spotrebitele/rizikove-e-shopy/
         #
         # ===============================================================\n
-        '''))
-        f.writelines([f'0.0.0.0 {domain_name}\n' for domain_name in domain_names])
+        ''')
+    output += '\n'.join(generated_rules)
+
+    return output
 
 
 if __name__ == '__main__':
-    create_block_list()
+    print(create_block_list_risk_eshops())

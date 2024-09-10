@@ -1,0 +1,11 @@
+# Git
+.gitignore
+.git
+
+# Docs
+README.md
+LICENSE
+
+# Docker
+.dockerignore
+Dockerfile
