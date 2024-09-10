@@ -1,6 +1,7 @@
 # Git
 .gitignore
-.git
+.git/
+.github/
 
 # Docs
 README.md
