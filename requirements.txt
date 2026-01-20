@@ -1,6 +1,6 @@
 requests==2.32.5
 lxml==6.0.2
-regex==2025.11.3
+regex==2026.1.15
 Flask==3.1.2
 Flask-Caching==2.3.1
 gunicorn==23.0.0
