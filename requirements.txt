@@ -1,4 +1,4 @@
-requests==2.33.0
+requests==2.33.1
 lxml==6.0.2
 regex==2026.3.32
 Flask==3.1.3
